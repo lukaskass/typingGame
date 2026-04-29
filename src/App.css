@@ -182,3 +182,16 @@
     border-right-color: var(--border);
   }
 }
+
+@keyframes slideDown {
+  0%   { transform: translateY(-100vh); visibility: visible; }
+  94%  { transform: translateY(100vh); visibility: visible; }
+  95%  { visibility: hidden; transform: translateY(-100vh); }
+  100% { visibility: hidden; transform: translateY(-100vh); }
+}
+
+.slide-down {
+  animation: slideDown 10s linear infinite forwards;
+  transform: translateY(-100vh);
+  will-change: transform;
+}
