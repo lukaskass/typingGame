@@ -3,7 +3,6 @@ import { useEffect } from 'react'
 import { useRef } from 'react'
 import './App.css'
 import { AnimatePresence, motion, useAnimation } from "framer-motion"
-
 import {
   Card,
   CardContent,
@@ -11,24 +10,18 @@ import {
 } from "@/components/ui/card"
 import { ArrowUpIcon, ArrowDownIcon } from "lucide-react"
 import { Button } from "@/components/ui/button"
-
-
 import {
   Tabs,
   TabsContent,
   TabsList,
   TabsTrigger,
 } from "@/components/ui/tabs"
-
 import { Input } from "@/components/ui/input"
-
 import {
   Field,
   FieldDescription,
   FieldLabel,
 } from "@/components/ui/field"
-
-
 import {
   Table,
   TableBody,
@@ -88,18 +81,15 @@ function App() {
   const scoreGain = 10;
   const scoreLoss = -10;
 
-  
-
-  
-
-  //participents = getItems(leaderboard + dificulty);
-
   function advanceWord() {
-    const nextWordToType = words[randomInt(words.length)]
-    currTypedWordRef.current = "";
-    currWordRef.current = nextWordToType;
-    setCurrTypedWord("")
-    setCurrWord(nextWordToType)
+  let nextWordToType = words[randomInt(words.length)];
+  while (nextWordToType === currWordRef.current) {
+    nextWordToType = words[randomInt(words.length)];
+  }
+  currTypedWordRef.current = "";
+  currWordRef.current = nextWordToType;
+  setCurrTypedWord("");
+  setCurrWord(nextWordToType);
   }
 
   const handleDifficultyChange = (number: number) => {
@@ -151,8 +141,6 @@ function App() {
   return () => window.removeEventListener('keydown', handleKeyPress);
   }, []);
 
-
-
   return (
     <>
       <div className="grid grid-cols-3 overflow-hidden w-full">
@@ -162,7 +150,7 @@ function App() {
               animate={controls} 
             >
             {currWord.split("").map((char, index) => (
-              <span className="text-4xl font-bold" key={index}
+              <span className="text-6xl font-bold" key={index}
               ref={el => { charRefs.current[index] = el; }}
               >{char}</span>
             ))}
@@ -184,13 +172,14 @@ function App() {
                   <span>{score}</span>
                 </div>
                 <div className='flex items-center flex-col'>
-                  <Button onClick={() => handleDifficultyChange(1)} 
-                  variant="outline" size="icon" aria-label="Submit">
+                  <span className='m-4'>Speed:</span>
+                  <Button onClick={() => handleDifficultyChange(1)}
+                  variant="outline" size="icon" aria-label="Increase difficulty">
                     <ArrowUpIcon />
                   </Button>
                   <span>{difficulty}</span>
-                  <Button onClick={() => handleDifficultyChange(-1)} 
-                  variant="outline" size="icon" aria-label="Submit">
+                  <Button onClick={() => handleDifficultyChange(-1)}
+                  variant="outline" size="icon" aria-label="Decrease difficulty">
                     <ArrowDownIcon />
                   </Button>
                 </div>
@@ -200,11 +189,11 @@ function App() {
                     <Input
                       id="input-field-username"
                       type="text"
-                      placeholder="Enter your username"
+                      placeholder=""
                       value={username}
                       onChange={(e) => setUsername(e.target.value)}
                     />
-                    <FieldDescription>
+                    <FieldDescription className='text-black-100'>
                       Choose a unique username to submit you score.
                     </FieldDescription>
                   </Field>
@@ -214,14 +203,12 @@ function App() {
             </TabsContent>
             <TabsContent value="leaderboard">
               <CardContent className='flex items-center flex-col justify-center h-screen'>
-
-
                 <Table className='text-lg'>
-                  <TableHeader>
+                  <TableHeader className='font-bold border-b-3 border-border'>
                     <TableRow>
-                      <TableHead>Place</TableHead>
-                      <TableHead>Username</TableHead>
-                      <TableHead>Score</TableHead>
+                      <TableHead className='font-extrabold'>Place</TableHead>
+                      <TableHead className='font-extrabold'>Username</TableHead>
+                      <TableHead className='font-extrabold'>Score</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
@@ -233,10 +220,7 @@ function App() {
                         </TableRow>
                       ))}
                   </TableBody>
-                </Table>
-
-
-               
+                </Table>  
               </CardContent>
             </TabsContent>
           </Card>
